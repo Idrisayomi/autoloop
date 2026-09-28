@@ -883,11 +883,27 @@
       }
     }
   
+    
     /* TESTIMONIALS */
+    .testimonials {
+      background: linear-gradient(160deg, var(--forest), var(--forest-deep));
+      color: #eef5f2;
+      padding-top: 70px;
+      padding-bottom: 80px;
+    }
+    .testimonials .section-label {
+      color: #a9c9c0;
+    }
+    .testimonials .section-label::before {
+      background: #a9c9c0;
+    }
+    .testimonials h2 {
+      color: #fff;
+    }
     .testimonial-carousel {
       position: relative;
       min-height: 180px;
-      max-width: 600px;
+      max-width: 650px;
       margin: 0 auto;
     }
     .testimonial-slide {
@@ -906,16 +922,20 @@
       pointer-events: auto;
     }
     .testimonial-slide p {
-      font-size: 17px;
+      font-size: 19px;
       font-weight: 500;
       font-style: italic;
-      margin-bottom: 12px;
-      line-height: 1.5;
+      font-family: 'Fraunces', serif;
+      margin-bottom: 16px;
+      line-height: 1.4;
+      color: #fff;
     }
     .testimonial-slide span {
       font-size: 14px;
       font-weight: 700;
-      color: var(--ink-soft);
+      color: var(--amber-bright);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
     }
 
   </style>
@@ -1088,6 +1108,33 @@
       <p style="color:var(--ink-soft);font-size:16.5px;max-width:30em;margin:0 auto;">A short, practical program built
         around the three points in the loop where you actually have leverage — Spark, Pull, and Reload — with the tools
         to work each one.</p>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials" >
+    <div class="wrap center">
+      <p class="section-label center" style="justify-content:center;">Real experiences</p>
+      <h2 style="font-size:27px; margin-bottom: 30px;">What people are saying</h2>
+      
+      <div class="testimonial-carousel">
+        <div class="testimonial-slide active">
+          <p>"I have been facing this problem for a long time, until I read and understood what exactly is causing the habit. Now I am no longer doing it by impulse and feeling guilt and shame. Thank you so much."</p>
+          <span>— Anonymous buyer</span>
+        </div>
+        <div class="testimonial-slide">
+          <p>"I feel more happy with myself now and I can focus on more important things in my life and improving my relationship with my partner."</p>
+          <span>— Tobi</span>
+        </div>
+        <div class="testimonial-slide">
+          <p>"I feel more productive after learning why I keep relapsing. Now I am in control of every decision."</p>
+          <span>— Chinedu</span>
+        </div>
+        <div class="testimonial-slide">
+          <p>"I've tried blockers and deleting apps, but nothing worked until I understood the autoloop mechanism. This system changed my perspective entirely."</p>
+          <span>— Emeka</span>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -1375,32 +1422,7 @@
   <section class="final-close">
     <div class="wrap">
       
-  <!-- TESTIMONIALS -->
-  <section class="testimonials" style="background: var(--tint-amber);">
-    <div class="wrap center">
-      <p class="section-label center" style="justify-content:center;">Real experiences</p>
-      <h2 style="font-size:27px; margin-bottom: 30px;">What people are saying</h2>
-      
-      <div class="testimonial-carousel">
-        <div class="testimonial-slide active">
-          <p>"I have been facing this problem for a long time, until I read and understood what exactly is causing the habit. Now I am no longer doing it by impulse and feeling guilt and shame. Thank you so much."</p>
-          <span>— Anonymous buyer</span>
-        </div>
-        <div class="testimonial-slide">
-          <p>"I feel more happy with myself now and I can focus on more important things in my life and improving my relationship with my partner."</p>
-          <span>— Tobi</span>
-        </div>
-        <div class="testimonial-slide">
-          <p>"I feel more productive after learning why I keep relapsing. Now I am in control of every decision."</p>
-          <span>— Chinedu</span>
-        </div>
-        <div class="testimonial-slide">
-          <p>"I've tried blockers and deleting apps, but nothing worked until I understood the autoloop mechanism. This system changed my perspective entirely."</p>
-          <span>— Emeka</span>
-        </div>
-      </div>
-    </div>
-  </section>
+  
 
   <!-- LAST THING -->
 <p class="section-label center" style="justify-content:center;">Last thing</p>
