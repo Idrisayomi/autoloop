@@ -882,6 +882,42 @@
         display: flex;
       }
     }
+  
+    /* TESTIMONIALS */
+    .testimonial-carousel {
+      position: relative;
+      min-height: 180px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .testimonial-slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      opacity: 0;
+      transform: translateX(20px);
+      transition: all 0.5s ease;
+      pointer-events: none;
+    }
+    .testimonial-slide.active {
+      opacity: 1;
+      transform: translateX(0);
+      pointer-events: auto;
+    }
+    .testimonial-slide p {
+      font-size: 17px;
+      font-weight: 500;
+      font-style: italic;
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+    .testimonial-slide span {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--ink-soft);
+    }
+
   </style>
 </head>
 
@@ -1338,7 +1374,36 @@
   <!-- FINAL CLOSE -->
   <section class="final-close">
     <div class="wrap">
-      <p class="section-label center" style="justify-content:center;">Last thing</p>
+      
+  <!-- TESTIMONIALS -->
+  <section class="testimonials" style="background: var(--tint-amber);">
+    <div class="wrap center">
+      <p class="section-label center" style="justify-content:center;">Real experiences</p>
+      <h2 style="font-size:27px; margin-bottom: 30px;">What people are saying</h2>
+      
+      <div class="testimonial-carousel">
+        <div class="testimonial-slide active">
+          <p>"I have been facing this problem for a long time, until I read and understood what exactly is causing the habit. Now I am no longer doing it by impulse and feeling guilt and shame. Thank you so much."</p>
+          <span>— Anonymous buyer</span>
+        </div>
+        <div class="testimonial-slide">
+          <p>"I feel more happy with myself now and I can focus on more important things in my life and improving my relationship with my partner."</p>
+          <span>— Tobi</span>
+        </div>
+        <div class="testimonial-slide">
+          <p>"I feel more productive after learning why I keep relapsing. Now I am in control of every decision."</p>
+          <span>— Chinedu</span>
+        </div>
+        <div class="testimonial-slide">
+          <p>"I've tried blockers and deleting apps, but nothing worked until I understood the autoloop mechanism. This system changed my perspective entirely."</p>
+          <span>— Emeka</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LAST THING -->
+<p class="section-label center" style="justify-content:center;">Last thing</p>
       <h2>The version of you that isn't surprised by his own behavior anymore</h2>
       <p style="max-width:32em;margin:0 auto 28px;">Not a version with zero urges — a version who sees the Spark coming,
         knows what to do with it, and isn't run by a loop he never agreed to.</p>
@@ -1351,6 +1416,11 @@
     <div class="wrap">
       <p class="section-label center" style="justify-content:center;">Checkout</p>
       <h2 class="center" style="font-size:25px;margin-bottom:26px;">Preorder The Autoloop System</h2>
+
+      <div class="bundle-image-container" style="text-align: center; margin-bottom: 24px;">
+         <img src="bundle_final.jpg" alt="The Autoloop System Bundle" style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+      </div>
+
       <div class="checkout">
         <h3>Order summary</h3>
         <div class="co-line"><span>The Autoloop System (core program)</span><span>₦7,000</span></div>
@@ -1419,6 +1489,20 @@
       }
     });
   </script>
+
+  <script>
+    // 3. Testimonial Carousel
+    const slides = document.querySelectorAll('.testimonial-slide');
+    if (slides.length > 0) {
+      let currentSlide = 0;
+      setInterval(() => {
+        slides[currentSlide].classList.remove('active');
+        currentSlide = (currentSlide + 1) % slides.length;
+        slides[currentSlide].classList.add('active');
+      }, 4000);
+    }
+  </script>
+
 </body>
 
 </html>
