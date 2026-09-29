@@ -71,7 +71,7 @@ module.exports = async function handler(req, res) {
     const payload = {
       data: [eventData],
       // Uncomment the line below with your test code to verify in Meta Events Manager
-      // test_event_code: 'TEST12345',
+      test_event_code: 'TEST77594',
     };
 
     // --- Send to Meta Conversions API ---
