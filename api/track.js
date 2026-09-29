@@ -19,7 +19,7 @@ module.exports = async function handler(req, res) {
   }
 
   try {
-    const { event_name, event_id, event_source_url, fbp, fbc, custom_data, email } = req.body;
+    const { event_name, event_id, event_source_url, fbp, fbc, custom_data, email, external_id } = req.body;
 
     if (!event_name || !event_id) {
       return res.status(400).json({ error: 'event_name and event_id are required' });
@@ -46,11 +46,36 @@ module.exports = async function handler(req, res) {
       ];
     }
 
-    // Generate a hashed external_id from IP + UA for consistent user matching
-    // (not PII — just a stable pseudonymous identifier for this visitor)
-    if (clientIp && userAgent) {
+    // Persistent external_id from browser (consistent across sessions)
+    if (external_id) {
+      userData.external_id = [
+        crypto.createHash('sha256').update(external_id).digest('hex')
+      ];
+    } else if (clientIp && userAgent) {
+      // Fallback: hash IP + UA
       userData.external_id = [
         crypto.createHash('sha256').update(clientIp + userAgent).digest('hex')
+      ];
+    }
+
+    // --- Geo data from Vercel headers (auto-detected, no user input needed) ---
+    const country = req.headers['x-vercel-ip-country'];       // e.g. "NG"
+    const city = req.headers['x-vercel-ip-city'];              // e.g. "Lagos"
+    const region = req.headers['x-vercel-ip-country-region'];  // e.g. "LA"
+
+    if (country) {
+      userData.country = [
+        crypto.createHash('sha256').update(country.toLowerCase().trim()).digest('hex')
+      ];
+    }
+    if (city) {
+      userData.ct = [
+        crypto.createHash('sha256').update(city.toLowerCase().trim().replace(/\s/g, '')).digest('hex')
+      ];
+    }
+    if (region) {
+      userData.st = [
+        crypto.createHash('sha256').update(region.toLowerCase().trim()).digest('hex')
       ];
     }
 

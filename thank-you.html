@@ -65,6 +65,7 @@
         event_source_url: window.location.href,
         fbp: getFbp(),
         fbc: getFbc(),
+        external_id: getExternalId(),
         custom_data: customData || {}
       };
       if (userEmail) payload.email = userEmail;
@@ -74,6 +75,18 @@
         body: JSON.stringify(payload),
         keepalive: true
       }).catch(function() {});
+    }
+
+    function getExternalId() {
+      var id = null;
+      try { id = localStorage.getItem('_al_eid'); } catch(e) {}
+      if (!id) id = getCookie('_al_eid');
+      if (!id) {
+        id = 'al.' + Date.now() + '.' + Math.random().toString(36).substr(2, 12);
+        try { localStorage.setItem('_al_eid', id); } catch(e) {}
+        setCookie('_al_eid', id, 365);
+      }
+      return id;
     }
 
     // ── Capture fbclid immediately on landing ──
