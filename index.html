@@ -23,8 +23,62 @@
       s.parentNode.insertBefore(t, s)
     }(window, document, 'script',
       'https://connect.facebook.net/en_US/fbevents.js');
+
+    /* ── CAPI Helper Functions ── */
+    function getCookie(name) {
+      var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+      return match ? match[2] : null;
+    }
+    function generateEventId() {
+      return 'eid.' + Date.now() + '.' + Math.random().toString(36).substr(2, 9);
+    }
+    function sendServerEvent(eventName, eventId, customData, userEmail) {
+      var payload = {
+        event_name: eventName,
+        event_id: eventId,
+        event_source_url: window.location.href,
+        fbp: getCookie('_fbp'),
+        fbc: getCookie('_fbc'),
+        custom_data: customData || {}
+      };
+      if (userEmail) payload.email = userEmail;
+      // If no _fbc cookie, try to build from fbclid URL param (visitor came from a Meta ad)
+      if (!payload.fbc) {
+        try {
+          var fbclid = new URLSearchParams(window.location.search).get('fbclid');
+          if (fbclid) payload.fbc = 'fb.1.' + Date.now() + '.' + fbclid;
+        } catch(e) {}
+      }
+      fetch('/api/track', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        keepalive: true
+      }).catch(function() {});
+    }
+
+    /* ── Pixel Init ── */
     fbq('init', '4790431957949867');
-    fbq('track', 'PageView');
+
+    /* ── PageView: browser + server ── */
+    var pvEventId = generateEventId();
+    fbq('track', 'PageView', {}, { eventID: pvEventId });
+    sendServerEvent('PageView', pvEventId);
+
+    /* ── ViewContent: browser + server ── */
+    var vcEventId = generateEventId();
+    fbq('track', 'ViewContent', {
+      content_name: 'The Autoloop System',
+      content_type: 'product',
+      value: 6999.99,
+      currency: 'NGN'
+    }, { eventID: vcEventId });
+    sendServerEvent('ViewContent', vcEventId, {
+      content_name: 'The Autoloop System',
+      content_type: 'product',
+      value: 6999.99,
+      currency: 'NGN'
+    });
   </script>
   <noscript><img height="1" width="1" style="display:none"
       src="https://www.facebook.com/tr?id=4790431957949867&ev=PageView&noscript=1" /></noscript>
@@ -1504,13 +1558,18 @@
 
 
   <script>
-    // 1. Track clicks on 'Take back control' buttons
+    // 1. Track clicks on 'Take back control' buttons (browser + server)
     document.querySelectorAll('a[href*="selar.com"]').forEach(button => {
       button.addEventListener('click', function() {
-        fbq('track', 'InitiateCheckout', {
-          button_name: 'Take back control',
-          destination: this.href
-        });
+        var icEventId = generateEventId();
+        var icData = {
+          content_name: 'The Autoloop System',
+          content_type: 'product',
+          value: 6999.99,
+          currency: 'NGN'
+        };
+        fbq('track', 'InitiateCheckout', icData, { eventID: icEventId });
+        sendServerEvent('InitiateCheckout', icEventId, icData);
       });
     });
 

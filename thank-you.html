@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thank You – The Autoloop System</title>
+  <meta name="robots" content="noindex, nofollow">
+  <!-- Meta Pixel Code -->
+  <script>
+    !function (f, b, e, v, n, t, s) {
+      if (f.fbq) return; n = f.fbq = function () {
+        n.callMethod ?
+          n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+      };
+      if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+      n.queue = []; t = b.createElement(e); t.async = !0;
+      t.src = v; s = b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t, s)
+    }(window, document, 'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+
+    /* ── CAPI Helper Functions ── */
+    function getCookie(name) {
+      var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+      return match ? match[2] : null;
+    }
+    function generateEventId() {
+      return 'eid.' + Date.now() + '.' + Math.random().toString(36).substr(2, 9);
+    }
+    function sendServerEvent(eventName, eventId, customData, userEmail) {
+      var payload = {
+        event_name: eventName,
+        event_id: eventId,
+        event_source_url: window.location.href,
+        fbp: getCookie('_fbp'),
+        fbc: getCookie('_fbc'),
+        custom_data: customData || {}
+      };
+      if (userEmail) payload.email = userEmail;
+      if (!payload.fbc) {
+        try {
+          var fbclid = new URLSearchParams(window.location.search).get('fbclid');
+          if (fbclid) payload.fbc = 'fb.1.' + Date.now() + '.' + fbclid;
+        } catch(e) {}
+      }
+      fetch('/api/track', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        keepalive: true
+      }).catch(function() {});
+    }
+
+    /* ── Pixel Init ── */
+    fbq('init', '4790431957949867');
+
+    /* ── PageView ── */
+    var pvEventId = generateEventId();
+    fbq('track', 'PageView', {}, { eventID: pvEventId });
+    sendServerEvent('PageView', pvEventId);
+
+    /* ── Purchase Event (fires once per session) ── */
+    if (!sessionStorage.getItem('autoloop_purchase_tracked')) {
+      sessionStorage.setItem('autoloop_purchase_tracked', '1');
+
+      var params = new URLSearchParams(window.location.search);
+      var buyerEmail = params.get('email') || params.get('buyer_email') || '';
+      var txnRef = params.get('reference') || params.get('trxref') || '';
+
+      var purchaseData = {
+        content_name: 'The Autoloop System',
+        content_type: 'product',
+        value: 6999.99,
+        currency: 'NGN',
+        num_items: 1
+      };
+      if (txnRef) purchaseData.order_id = txnRef;
+
+      var purchaseEventId = generateEventId();
+
+      // Browser pixel — include email as advanced matching if available
+      if (buyerEmail) {
+        fbq('init', '4790431957949867', { em: buyerEmail.toLowerCase().trim() });
+      }
+      fbq('track', 'Purchase', purchaseData, { eventID: purchaseEventId });
+
+      // Server-side CAPI — email will be hashed server-side
+      sendServerEvent('Purchase', purchaseEventId, purchaseData, buyerEmail);
+    }
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+      src="https://www.facebook.com/tr?id=4790431957949867&ev=PageView&noscript=1" /></noscript>
+  <!-- End Meta Pixel Code -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap');
+
+    :root {
+      --ink: #15181d;
+      --ink-soft: #4a5058;
+      --line: #e6e3db;
+      --cream: #faf5ec;
+      --tint-blue: #eef4f8;
+      --tint-amber: #fbf1e0;
+      --tint-grey: #f4f2ee;
+      --control: #1d3b53;
+      --control-deep: #10202e;
+      --forest: #123832;
+      --forest-deep: #0c2622;
+      --amber: #b8792a;
+      --amber-bright: #d99a3f;
+      --amber-soft: #f4e3cc;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      color: var(--ink);
+      background: #fff;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Fraunces', serif;
+      font-weight: 600;
+      line-height: 1.12;
+      margin: 0 0 0.5em;
+      letter-spacing: -0.01em;
+    }
+
+    p { margin: 0 0 1em; }
+
+    .wrap {
+      max-width: 620px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ── Hero ── */
+    .ty-hero {
+      padding: 80px 0 60px;
+      text-align: center;
+      background: var(--cream);
+    }
+
+    .ty-hero .checkmark {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 28px;
+      background: var(--forest);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .ty-hero .checkmark svg {
+      width: 36px;
+      height: 36px;
+      stroke: #fff;
+      stroke-width: 3;
+      fill: none;
+    }
+
+    .ty-hero h1 {
+      font-size: clamp(28px, 5vw, 40px);
+      margin-bottom: 16px;
+    }
+
+    .ty-hero p {
+      font-size: 17px;
+      color: var(--ink-soft);
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    /* ── Info Cards ── */
+    .ty-section {
+      padding: 56px 0;
+    }
+
+    .ty-section.alt {
+      background: var(--tint-grey);
+    }
+
+    .ty-section h2 {
+      font-size: clamp(22px, 4vw, 28px);
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    .info-card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 28px 24px;
+      display: flex;
+      gap: 18px;
+      align-items: flex-start;
+    }
+
+    .ty-section.alt .info-card {
+      background: #fff;
+    }
+
+    .info-card .icon {
+      flex-shrink: 0;
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+    }
+
+    .icon-amber { background: var(--tint-amber); }
+    .icon-blue  { background: var(--tint-blue); }
+    .icon-grey  { background: var(--tint-grey); }
+    .icon-green { background: #e8f5e9; }
+
+    .info-card h3 {
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      margin: 0 0 6px;
+      line-height: 1.3;
+    }
+
+    .info-card p {
+      font-size: 14.5px;
+      color: var(--ink-soft);
+      margin: 0;
+      line-height: 1.55;
+    }
+
+    /* ── Timeline ── */
+    .timeline {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 0;
+      list-style: none;
+    }
+
+    .timeline li {
+      position: relative;
+      padding: 0 0 32px 40px;
+    }
+
+    .timeline li:last-child {
+      padding-bottom: 0;
+    }
+
+    .timeline li::before {
+      content: '';
+      position: absolute;
+      left: 12px;
+      top: 28px;
+      bottom: 0;
+      width: 2px;
+      background: var(--line);
+    }
+
+    .timeline li:last-child::before {
+      display: none;
+    }
+
+    .timeline .dot {
+      position: absolute;
+      left: 4px;
+      top: 4px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 3px solid var(--forest);
+      background: #fff;
+    }
+
+    .timeline li.active .dot {
+      background: var(--forest);
+    }
+
+    .timeline h3 {
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      margin: 0 0 4px;
+    }
+
+    .timeline p {
+      font-size: 14px;
+      color: var(--ink-soft);
+      margin: 0;
+    }
+
+    /* ── CTA ── */
+    .ty-cta {
+      padding: 56px 0 72px;
+      text-align: center;
+      background: var(--control-deep);
+      color: #fff;
+    }
+
+    .ty-cta h2 {
+      color: #fff;
+      margin-bottom: 16px;
+    }
+
+    .ty-cta p {
+      color: rgba(255,255,255,0.7);
+      max-width: 440px;
+      margin: 0 auto 28px;
+      font-size: 15px;
+    }
+
+    .ty-cta .btn {
+      display: inline-block;
+      background: var(--amber-bright);
+      color: var(--control-deep);
+      font-weight: 700;
+      font-size: 15px;
+      padding: 14px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .ty-cta .btn:hover {
+      background: var(--amber);
+      color: #fff;
+    }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 28px 24px;
+      font-size: 13px;
+      color: var(--ink-soft);
+      border-top: 1px solid var(--line);
+    }
+
+    footer a {
+      color: var(--ink-soft);
+      text-decoration: underline;
+    }
+
+    @media (max-width: 480px) {
+      .ty-hero { padding: 56px 0 44px; }
+      .ty-section { padding: 40px 0; }
+      .info-card { padding: 22px 18px; gap: 14px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HERO -->
+  <section class="ty-hero">
+    <div class="wrap">
+      <div class="checkmark">
+        <svg viewBox="0 0 24 24"><polyline points="4 12 10 18 20 6"></polyline></svg>
+      </div>
+      <h1>You're in.</h1>
+      <p>Your preorder for <strong>The Autoloop System</strong> is confirmed. Check your inbox — a confirmation from Selar should be there now.</p>
+    </div>
+  </section>
+
+  <!-- WHAT HAPPENS NEXT -->
+  <section class="ty-section">
+    <div class="wrap">
+      <h2>What happens next</h2>
+      <ul class="timeline">
+        <li class="active">
+          <span class="dot"></span>
+          <h3>Right now</h3>
+          <p>Your payment is confirmed. You'll receive a receipt from Selar in your email.</p>
+        </li>
+        <li>
+          <span class="dot"></span>
+          <h3>Before launch</h3>
+          <p>You'll get a short email when everything is finalized — no spam, just a heads-up.</p>
+        </li>
+        <li>
+          <span class="dot"></span>
+          <h3>Launch day — 15 October 2025</h3>
+          <p>The full system drops straight into your inbox. Core program + every bonus tool, privately delivered.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- WHAT YOU'RE GETTING -->
+  <section class="ty-section alt">
+    <div class="wrap">
+      <h2>What's waiting for you</h2>
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="icon icon-amber">📖</div>
+          <div>
+            <h3>The Autoloop System (core)</h3>
+            <p>The full framework for understanding why the loop starts, what keeps it running, and how to interrupt it — without willpower or shame.</p>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="icon icon-blue">📝</div>
+          <div>
+            <h3>The Spark Log</h3>
+            <p>A daily tracking tool that helps you spot your real triggers — not the ones you think, the ones that actually start the sequence.</p>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="icon icon-green">🛡️</div>
+          <div>
+            <h3>The Pull Interrupt List</h3>
+            <p>Pre-built responses for the moment between urge and action. You won't need to think — just follow the list.</p>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="icon icon-grey">🗺️</div>
+          <div>
+            <h3>High-Risk Hours Map + Decision Tree</h3>
+            <p>Know exactly when you're most vulnerable and what to do at each decision point.</p>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="icon icon-amber">🔄</div>
+          <div>
+            <h3>Reload Debrief + 30-Day Tracker</h3>
+            <p>If you slip, this is how you come back — without the spiral. Plus a visual tracker to see your progress build.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLOSING -->
+  <section class="ty-cta">
+    <div class="wrap">
+      <h2>You just did the hardest part</h2>
+      <p>Most people stay stuck because they never take the first step. You just did. Everything from here is built to meet you where you are.</p>
+      <a href="index.html" class="btn">Back to homepage</a>
+    </div>
+  </section>
+
+  <footer>
+    <div>Questions? Reach out — your purchase is private, and so is any conversation about it.</div>
+    <div style="margin-top: 12px; display: flex; justify-content: center; gap: 16px;">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Service</a>
+    </div>
+  </footer>
+
+</body>
+</html>
