@@ -115,13 +115,11 @@
       fbq('track', 'Purchase', purchaseData, { eventID: purchaseEventId });
     }
 
-    /* ── Server events fire after 1s delay (lets pixel set cookies) ── */
-    setTimeout(function() {
-      sendServerEvent('PageView', pvEventId);
-      if (purchaseEventId) {
-        sendServerEvent('Purchase', purchaseEventId, purchaseData, buyerEmail);
-      }
-    }, 1000);
+    /* ── Server events fire immediately (getFbc/getFbp handle cookies) ── */
+    sendServerEvent('PageView', pvEventId);
+    if (purchaseEventId) {
+      sendServerEvent('Purchase', purchaseEventId, purchaseData, buyerEmail);
+    }
   </script>
   <noscript><img height="1" width="1" style="display:none"
       src="https://www.facebook.com/tr?id=4790431957949867&ev=PageView&noscript=1" /></noscript>
