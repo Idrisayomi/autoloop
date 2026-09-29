@@ -29,26 +29,62 @@
       var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
       return match ? match[2] : null;
     }
+    function setCookie(name, value, days) {
+      var d = new Date(); d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+      document.cookie = name + '=' + value + '; expires=' + d.toUTCString() + '; path=/; SameSite=Lax';
+    }
     function generateEventId() {
       return 'eid.' + Date.now() + '.' + Math.random().toString(36).substr(2, 9);
     }
+
+    /* ── fbc: Capture Click ID from URL, cookie, or localStorage ── */
+    function getFbc() {
+      // 1. Check cookie first (set by Meta pixel)
+      var fbc = getCookie('_fbc');
+      if (fbc) return fbc;
+
+      // 2. Build from fbclid URL parameter (visitor clicked a Meta ad)
+      try {
+        var fbclid = new URLSearchParams(window.location.search).get('fbclid');
+        if (fbclid) {
+          fbc = 'fb.1.' + Date.now() + '.' + fbclid;
+          setCookie('_fbc', fbc, 90);
+          try { localStorage.setItem('_fbc', fbc); } catch(e) {}
+          return fbc;
+        }
+      } catch(e) {}
+
+      // 3. Check localStorage (persisted from a previous page)
+      try {
+        var stored = localStorage.getItem('_fbc');
+        if (stored) return stored;
+      } catch(e) {}
+
+      return null;
+    }
+
+    /* ── fbp: Read or generate browser ID ── */
+    function getFbp() {
+      var fbp = getCookie('_fbp');
+      if (fbp) return fbp;
+
+      // Generate our own if pixel hasn't set it yet
+      var rand = Math.floor(Math.random() * 2147483647);
+      fbp = 'fb.1.' + Date.now() + '.' + rand;
+      setCookie('_fbp', fbp, 365);
+      return fbp;
+    }
+
     function sendServerEvent(eventName, eventId, customData, userEmail) {
       var payload = {
         event_name: eventName,
         event_id: eventId,
         event_source_url: window.location.href,
-        fbp: getCookie('_fbp'),
-        fbc: getCookie('_fbc'),
+        fbp: getFbp(),
+        fbc: getFbc(),
         custom_data: customData || {}
       };
       if (userEmail) payload.email = userEmail;
-      // If no _fbc cookie, try to build from fbclid URL param (visitor came from a Meta ad)
-      if (!payload.fbc) {
-        try {
-          var fbclid = new URLSearchParams(window.location.search).get('fbclid');
-          if (fbclid) payload.fbc = 'fb.1.' + Date.now() + '.' + fbclid;
-        } catch(e) {}
-      }
       fetch('/api/track', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -57,28 +93,32 @@
       }).catch(function() {});
     }
 
+    // ── Capture fbclid immediately on landing (before pixel loads) ──
+    getFbc();
+
     /* ── Pixel Init ── */
     fbq('init', '4790431957949867');
 
-    /* ── PageView: browser + server ── */
+    /* ── Browser events fire immediately ── */
     var pvEventId = generateEventId();
     fbq('track', 'PageView', {}, { eventID: pvEventId });
-    sendServerEvent('PageView', pvEventId);
 
-    /* ── ViewContent: browser + server ── */
+    var vcData = {
+      content_name: 'The Autoloop System',
+      content_ids: ['autoloop-system'],
+      content_type: 'product',
+      value: 6999.99,
+      currency: 'NGN',
+      num_items: 1
+    };
     var vcEventId = generateEventId();
-    fbq('track', 'ViewContent', {
-      content_name: 'The Autoloop System',
-      content_type: 'product',
-      value: 6999.99,
-      currency: 'NGN'
-    }, { eventID: vcEventId });
-    sendServerEvent('ViewContent', vcEventId, {
-      content_name: 'The Autoloop System',
-      content_type: 'product',
-      value: 6999.99,
-      currency: 'NGN'
-    });
+    fbq('track', 'ViewContent', vcData, { eventID: vcEventId });
+
+    /* ── Server events fire after 1s delay (lets pixel set cookies) ── */
+    setTimeout(function() {
+      sendServerEvent('PageView', pvEventId);
+      sendServerEvent('ViewContent', vcEventId, vcData);
+    }, 1000);
   </script>
   <noscript><img height="1" width="1" style="display:none"
       src="https://www.facebook.com/tr?id=4790431957949867&ev=PageView&noscript=1" /></noscript>
@@ -1564,9 +1604,11 @@
         var icEventId = generateEventId();
         var icData = {
           content_name: 'The Autoloop System',
+          content_ids: ['autoloop-system'],
           content_type: 'product',
           value: 6999.99,
-          currency: 'NGN'
+          currency: 'NGN',
+          num_items: 1
         };
         fbq('track', 'InitiateCheckout', icData, { eventID: icEventId });
         sendServerEvent('InitiateCheckout', icEventId, icData);

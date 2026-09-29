@@ -25,25 +25,49 @@
       var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
       return match ? match[2] : null;
     }
+    function setCookie(name, value, days) {
+      var d = new Date(); d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+      document.cookie = name + '=' + value + '; expires=' + d.toUTCString() + '; path=/; SameSite=Lax';
+    }
     function generateEventId() {
       return 'eid.' + Date.now() + '.' + Math.random().toString(36).substr(2, 9);
+    }
+    function getFbc() {
+      var fbc = getCookie('_fbc');
+      if (fbc) return fbc;
+      try {
+        var fbclid = new URLSearchParams(window.location.search).get('fbclid');
+        if (fbclid) {
+          fbc = 'fb.1.' + Date.now() + '.' + fbclid;
+          setCookie('_fbc', fbc, 90);
+          try { localStorage.setItem('_fbc', fbc); } catch(e) {}
+          return fbc;
+        }
+      } catch(e) {}
+      try {
+        var stored = localStorage.getItem('_fbc');
+        if (stored) return stored;
+      } catch(e) {}
+      return null;
+    }
+    function getFbp() {
+      var fbp = getCookie('_fbp');
+      if (fbp) return fbp;
+      var rand = Math.floor(Math.random() * 2147483647);
+      fbp = 'fb.1.' + Date.now() + '.' + rand;
+      setCookie('_fbp', fbp, 365);
+      return fbp;
     }
     function sendServerEvent(eventName, eventId, customData, userEmail) {
       var payload = {
         event_name: eventName,
         event_id: eventId,
         event_source_url: window.location.href,
-        fbp: getCookie('_fbp'),
-        fbc: getCookie('_fbc'),
+        fbp: getFbp(),
+        fbc: getFbc(),
         custom_data: customData || {}
       };
       if (userEmail) payload.email = userEmail;
-      if (!payload.fbc) {
-        try {
-          var fbclid = new URLSearchParams(window.location.search).get('fbclid');
-          if (fbclid) payload.fbc = 'fb.1.' + Date.now() + '.' + fbclid;
-        } catch(e) {}
-      }
       fetch('/api/track', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -52,24 +76,30 @@
       }).catch(function() {});
     }
 
+    // ── Capture fbclid immediately on landing ──
+    getFbc();
+
     /* ── Pixel Init ── */
     fbq('init', '4790431957949867');
 
-    /* ── PageView ── */
+    /* ── Browser events fire immediately ── */
     var pvEventId = generateEventId();
     fbq('track', 'PageView', {}, { eventID: pvEventId });
-    sendServerEvent('PageView', pvEventId);
 
-    /* ── Purchase Event (fires once per session) ── */
+    var purchaseEventId = null;
+    var purchaseData = null;
+    var buyerEmail = null;
+
     if (!sessionStorage.getItem('autoloop_purchase_tracked')) {
       sessionStorage.setItem('autoloop_purchase_tracked', '1');
 
       var params = new URLSearchParams(window.location.search);
-      var buyerEmail = params.get('email') || params.get('buyer_email') || '';
+      buyerEmail = params.get('email') || params.get('buyer_email') || '';
       var txnRef = params.get('reference') || params.get('trxref') || '';
 
-      var purchaseData = {
+      purchaseData = {
         content_name: 'The Autoloop System',
+        content_ids: ['autoloop-system'],
         content_type: 'product',
         value: 6999.99,
         currency: 'NGN',
@@ -77,17 +107,21 @@
       };
       if (txnRef) purchaseData.order_id = txnRef;
 
-      var purchaseEventId = generateEventId();
+      purchaseEventId = generateEventId();
 
-      // Browser pixel — include email as advanced matching if available
       if (buyerEmail) {
         fbq('init', '4790431957949867', { em: buyerEmail.toLowerCase().trim() });
       }
       fbq('track', 'Purchase', purchaseData, { eventID: purchaseEventId });
-
-      // Server-side CAPI — email will be hashed server-side
-      sendServerEvent('Purchase', purchaseEventId, purchaseData, buyerEmail);
     }
+
+    /* ── Server events fire after 1s delay (lets pixel set cookies) ── */
+    setTimeout(function() {
+      sendServerEvent('PageView', pvEventId);
+      if (purchaseEventId) {
+        sendServerEvent('Purchase', purchaseEventId, purchaseData, buyerEmail);
+      }
+    }, 1000);
   </script>
   <noscript><img height="1" width="1" style="display:none"
       src="https://www.facebook.com/tr?id=4790431957949867&ev=PageView&noscript=1" /></noscript>
