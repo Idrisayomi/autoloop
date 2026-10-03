@@ -1761,26 +1761,23 @@
       
       popup.classList.add('show');
       
-      // Hide after 6 seconds
+      // Hide after 3.5 seconds to prevent overlap
       setTimeout(() => {
         popup.classList.remove('show');
-      }, 6000);
-    }
-
-    // Show first popup after 4 seconds
-    setTimeout(() => {
-      showPopup();
-      
-      // Variable interval for subsequent popups (every 15 to 35 seconds)
-      function queueNextPopup() {
-        const nextDelay = Math.floor(Math.random() * 20000) + 15000; 
+        
+        // Queue the next popup to appear 2 to 5 seconds AFTER this one hides
+        const nextDelay = Math.floor(Math.random() * 3000) + 2000; 
         setTimeout(() => {
           showPopup();
-          queueNextPopup();
         }, nextDelay);
-      }
-      queueNextPopup();
-    }, 4000);
+        
+      }, 3500);
+    }
+
+    // Show first popup after 2 seconds
+    setTimeout(() => {
+      showPopup();
+    }, 2000);
   </script>
 </body>
 
