@@ -1,13 +1,13 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Autoloop System — Preorder</title>
+  <title>The Autoloop System â€” Preorder</title>
   <!-- Open Graph / Social Sharing -->
-  <meta property="og:title" content="The Autoloop System — Preorder">
-  <meta property="og:description" content="A private system for understanding and interrupting an automatic habit — built around why it starts, not just trying to stop it.">
+  <meta property="og:title" content="The Autoloop System â€” Preorder">
+  <meta property="og:description" content="A private system for understanding and interrupting an automatic habit â€” built around why it starts, not just trying to stop it.">
   <meta property="og:image" content="bundle_final.jpg">
   <meta property="og:type" content="website">
   <!-- Meta Pixel Code -->
@@ -24,7 +24,7 @@
     }(window, document, 'script',
       'https://connect.facebook.net/en_US/fbevents.js');
 
-    /* ── CAPI Helper Functions ── */
+    /* â”€â”€ CAPI Helper Functions â”€â”€ */
     function getCookie(name) {
       var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
       return match ? match[2] : null;
@@ -37,7 +37,7 @@
       return 'eid.' + Date.now() + '.' + Math.random().toString(36).substr(2, 9);
     }
 
-    /* ── fbc: Capture Click ID from URL, cookie, or localStorage ── */
+    /* â”€â”€ fbc: Capture Click ID from URL, cookie, or localStorage â”€â”€ */
     function getFbc() {
       // 1. Check cookie first (set by Meta pixel)
       var fbc = getCookie('_fbc');
@@ -63,7 +63,7 @@
       return null;
     }
 
-    /* ── fbp: Read or generate browser ID ── */
+    /* â”€â”€ fbp: Read or generate browser ID â”€â”€ */
     function getFbp() {
       var fbp = getCookie('_fbp');
       if (fbp) return fbp;
@@ -94,7 +94,7 @@
       }).catch(function() {});
     }
 
-    /* ── Persistent external_id (survives across sessions) ── */
+    /* â”€â”€ Persistent external_id (survives across sessions) â”€â”€ */
     function getExternalId() {
       var id = null;
       try { id = localStorage.getItem('_al_eid'); } catch(e) {}
@@ -107,13 +107,13 @@
       return id;
     }
 
-    // ── Capture fbclid immediately on landing (before pixel loads) ──
+    // â”€â”€ Capture fbclid immediately on landing (before pixel loads) â”€â”€
     getFbc();
 
-    /* ── Pixel Init ── */
+    /* â”€â”€ Pixel Init â”€â”€ */
     fbq('init', '4790431957949867');
 
-    /* ── Browser events fire immediately ── */
+    /* â”€â”€ Browser events fire immediately â”€â”€ */
     var pvEventId = generateEventId();
     fbq('track', 'PageView', {}, { eventID: pvEventId });
 
@@ -128,7 +128,7 @@
     var vcEventId = generateEventId();
     fbq('track', 'ViewContent', vcData, { eventID: vcEventId });
 
-    /* ── Server events fire immediately (getFbc/getFbp handle cookies) ── */
+    /* â”€â”€ Server events fire immediately (getFbc/getFbp handle cookies) â”€â”€ */
     sendServerEvent('PageView', pvEventId);
     sendServerEvent('ViewContent', vcEventId, vcData);
   </script>
@@ -406,7 +406,7 @@
     }
 
     .not-for-card li::before {
-      content: "✕";
+      content: "âœ•";
       position: absolute;
       left: 0;
       top: 14px;
@@ -1110,7 +1110,7 @@
 
 <body>
   <div id="top-urgency-bar">
-    ⏳ Preorder closes in: 
+    â³ Preorder closes in: 
     <div class="timer-wrap">
       <div class="timer-unit" id="t-days">11d</div>:
       <div class="timer-unit" id="t-hrs">00h</div>:
@@ -1131,11 +1131,11 @@
         Preorder now open
       </div>
       <h1>You're not weak. You're running a <span class="accent">Script.</span></h1>
-      <p class="sub">A private system for understanding and interrupting an automatic sexual habit — built around why it
+      <p class="sub">A private system for understanding and interrupting an automatic sexual habit â€” built around why it
         repeats, not around how much willpower you have.</p>
       <div class="actions">
         <a href="https://selar.com/theautoloopsystem" target="_blank" class="btn btn-primary">Get The Autoloop System</a>
-        <span class="cta-note">Delivered <b>privately</b> to your inbox — nothing about the subject appears
+        <span class="cta-note">Delivered <b>privately</b> to your inbox â€” nothing about the subject appears
           anywhere.</span>
       </div>
     </div>
@@ -1144,7 +1144,7 @@
   <!-- WHO IT'S FOR -->
   <section class="who">
     <div class="wrap">
-      <h2 style="font-size:26px;">This is for you if…</h2>
+      <h2 style="font-size:26px;">This is for you ifâ€¦</h2>
       <div class="who-grid">
         <div class="who-card">
           <h4>You keep deciding to stop</h4>
@@ -1156,11 +1156,11 @@
         </div>
         <div class="who-card">
           <h4>You want control, not a verdict</h4>
-          <p>You're not looking to be told this is shameful — you want to actually change the pattern.</p>
+          <p>You're not looking to be told this is shameful â€” you want to actually change the pattern.</p>
         </div>
         <div class="who-card">
           <h4>You've tried the obvious fixes</h4>
-          <p>Blocking apps, streaks, willpower — and they held for a while, then didn't.</p>
+          <p>Blocking apps, streaks, willpower â€” and they held for a while, then didn't.</p>
         </div>
       </div>
     </div>
@@ -1170,7 +1170,7 @@
   <!-- WHO IT'S NOT FOR -->
   <section class="not-for">
     <div class="wrap">
-      <h2 style="font-size:26px;">To be upfront — this probably isn't for you if…</h2>
+      <h2 style="font-size:26px;">To be upfront â€” this probably isn't for you ifâ€¦</h2>
       <div class="who-grid">
         <div class="who-card">
           <h4>You want clinical treatment</h4>
@@ -1182,11 +1182,11 @@
         </div>
         <div class="who-card">
           <h4>It's a crisis-level compulsion</h4>
-          <p>If this is already affecting your safety or mental health — please talk to a qualified professional first.</p>
+          <p>If this is already affecting your safety or mental health â€” please talk to a qualified professional first.</p>
         </div>
         <div class="who-card">
           <h4>You expect shame-based framing</h4>
-          <p>You believe masturbation itself needs to be framed as sinful or damaging — this system won't do that.</p>
+          <p>You believe masturbation itself needs to be framed as sinful or damaging â€” this system won't do that.</p>
         </div>
       </div>
     </div>
@@ -1199,58 +1199,16 @@
       <ul class="pain-list">
         <li>"I'll stop tomorrow."</li>
         <li>"Just one more time."</li>
-        <li>"I wasn't even in the mood — I don't know why I did it."</li>
+        <li>"I wasn't even in the mood â€” I don't know why I did it."</li>
         <li>"I was just bored."</li>
         <li>"I opened my phone for something else and ended up there again."</li>
         <li>"I genuinely don't understand why I keep doing this."</li>
       </ul>
       <div class="pain-ack">
-        <strong>If two or more of those sound like your own voice — that's not a willpower problem.</strong> It's a
+        <strong>If two or more of those sound like your own voice â€” that's not a willpower problem.</strong> It's a
         pattern that's been running on autopilot, and you've just never had a way to actually see it happening until
         now.
       </div>
-    </div>
-  </section>
-
-  <!-- MECHANISM -->
-  <section class="dark">
-    <div class="wrap">
-      <h2>You've been fighting at the hardest possible moment.</h2>
-      <p style="font-size:16.5px;">Every method that relies on "just don't do it" asks you to win at the exact point
-        where the urge is strongest and your reasoning brain has the least influence. That's not a discipline problem —
-        it's the wrong point of attack.</p>
-      <div class="loop-callout">The habit doesn't start with the act. It starts several steps earlier, somewhere you're
-        not watching.</div>
-      <p style="font-size:16.5px;">The six-stage pattern most people never see, because it happens fast and mostly
-        outside conscious awareness:</p>
-      <div class="loop-diagram">
-        <div class="loop-step"><span class="n">1</span>
-          <h4>Spark</h4>
-          <p>An internal state or cue — boredom, loneliness, stress, an empty stretch of time.</p>
-        </div>
-        <div class="loop-step"><span class="n">2</span>
-          <h4>Pull</h4>
-          <p>The Spark turns into a craving, fast enough to feel like a pull, not a thought.</p>
-        </div>
-        <div class="loop-step"><span class="n">3</span>
-          <h4>Script</h4>
-          <p>A pre-loaded sequence runs — unlock, open, search. The "I wasn't deciding" part.</p>
-        </div>
-        <div class="loop-step"><span class="n">4</span>
-          <h4>Discharge</h4>
-          <p>The act itself — the point every willpower method tries and mostly fails to stop.</p>
-        </div>
-        <div class="loop-step"><span class="n">5</span>
-          <h4>Numb</h4>
-          <p>A short window of flatness — not pleasure, more a dulling of the original state.</p>
-        </div>
-        <div class="loop-step"><span class="n">6</span>
-          <h4>Reload</h4>
-          <p>Guilt sets in — and quietly becomes the next Spark.</p>
-        </div>
-      </div>
-      <p style="font-size:16.5px;">That last step is the trap. The guilt doesn't end the cycle — it feeds it. That's why
-        the pattern tightens instead of fading.</p>
     </div>
   </section>
 
@@ -1262,7 +1220,7 @@
       </div>
       <h2 style="font-size:30px;">The Autoloop System</h2>
       <p style="color:var(--ink-soft);font-size:16.5px;max-width:30em;margin:0 auto;">A short, practical program built
-        around the three points in the loop where you actually have leverage — Spark, Pull, and Reload — with the tools
+        around the three points in the loop where you actually have leverage â€” Spark, Pull, and Reload â€” with the tools
         to work each one.</p>
     </div>
   </section>
@@ -1275,19 +1233,19 @@
       <div class="testimonial-carousel">
         <div class="testimonial-slide active">
           <p>"I have been facing this problem for a long time, until I read and understood what exactly is causing the habit. Now I am no longer doing it by impulse and feeling guilt and shame. Thank you so much."</p>
-          <span>— Anonymous buyer</span>
+          <span>â€” Anonymous buyer</span>
         </div>
         <div class="testimonial-slide">
           <p>"I feel more happy with myself now and I can focus on more important things in my life and improving my relationship with my partner."</p>
-          <span>— Tobi</span>
+          <span>â€” Tobi</span>
         </div>
         <div class="testimonial-slide">
           <p>"I feel more productive after learning why I keep relapsing. Now I am in control of every decision."</p>
-          <span>— Chinedu</span>
+          <span>â€” Chinedu</span>
         </div>
         <div class="testimonial-slide">
           <p>"I've tried blockers and deleting apps, but nothing worked until I understood the autoloop mechanism. This system changed my perspective entirely."</p>
-          <span>— Emeka</span>
+          <span>â€” Emeka</span>
         </div>
       </div>
     </div>
@@ -1310,7 +1268,7 @@
           </ul>
         </div>
         <div class="ba-card ba-after">
-          <span class="stars">★★★★★</span>
+          <span class="stars">â˜…â˜…â˜…â˜…â˜…</span>
           <div class="ba-label">After</div>
           <ul>
             <li>"I don't act on impulse anymore."</li>
@@ -1340,14 +1298,14 @@
       <div class="module"><span class="n">02</span>
         <div><span class="tag">Bonus</span>
           <h3>The Spark Log</h3>
-          <p>A short daily entry for naming what came right before an urge — turns "random" into a visible pattern
+          <p>A short daily entry for naming what came right before an urge â€” turns "random" into a visible pattern
             within days.</p>
         </div>
       </div>
       <div class="module"><span class="n">03</span>
         <div><span class="tag">Bonus</span>
           <h3>The Pull Interrupt List</h3>
-          <p>A ready-made menu of actions for right after a craving hits — nothing to invent under pressure.</p>
+          <p>A ready-made menu of actions for right after a craving hits â€” nothing to invent under pressure.</p>
         </div>
       </div>
       <div class="module"><span class="n">04</span>
@@ -1359,13 +1317,13 @@
       <div class="module"><span class="n">05</span>
         <div><span class="tag">Bonus</span>
           <h3>The Decision Tree</h3>
-          <p>A one-page flowchart for your highest-pressure moments — nothing to figure out when patience is lowest.</p>
+          <p>A one-page flowchart for your highest-pressure moments â€” nothing to figure out when patience is lowest.</p>
         </div>
       </div>
       <div class="module"><span class="n">06</span>
         <div><span class="tag">Bonus</span>
           <h3>Reload Debrief + 30-Day Tracker</h3>
-          <p>A shame-free way to review a slip, plus a log tying it all together — breaks the guilt-feeds-Spark cycle.
+          <p>A shame-free way to review a slip, plus a log tying it all together â€” breaks the guilt-feeds-Spark cycle.
           </p>
         </div>
       </div>
@@ -1378,7 +1336,7 @@
             <h2 class="center" style="font-size:25px;margin-bottom:20px;">Preorder The Autoloop System</h2>
 
       <div class="checkout-timer">
-        ⏳ Preorder window closes in: 
+        â³ Preorder window closes in: 
         <div class="timer-wrap">
           <div class="timer-unit" id="c-days">11d</div>:
           <div class="timer-unit" id="c-hrs">00h</div>:
@@ -1393,17 +1351,17 @@
 
       <div class="checkout">
         <h3>Order summary</h3>
-        <div class="co-line"><span>The Autoloop System (core program)</span><span>₦7,000</span></div>
-        <div class="co-line"><span>The Spark Log</span><span class="strike">₦2,500</span></div>
-        <div class="co-line"><span>The Pull Interrupt List</span><span class="strike">₦3,000</span></div>
-        <div class="co-line"><span>The High-Risk Hours Map</span><span class="strike">₦2,000</span></div>
-        <div class="co-line"><span>The Decision Tree</span><span class="strike">₦2,000</span></div>
-        <div class="co-line"><span>Reload Debrief + 30-Day Tracker</span><span class="strike">₦4,500</span></div>
-        <div class="co-line total"><span>Preorder price today</span><span>₦6,999.99</span></div>
+        <div class="co-line"><span>The Autoloop System (core program)</span><span>â‚¦7,000</span></div>
+        <div class="co-line"><span>The Spark Log</span><span class="strike">â‚¦2,500</span></div>
+        <div class="co-line"><span>The Pull Interrupt List</span><span class="strike">â‚¦3,000</span></div>
+        <div class="co-line"><span>The High-Risk Hours Map</span><span class="strike">â‚¦2,000</span></div>
+        <div class="co-line"><span>The Decision Tree</span><span class="strike">â‚¦2,000</span></div>
+        <div class="co-line"><span>Reload Debrief + 30-Day Tracker</span><span class="strike">â‚¦4,500</span></div>
+        <div class="co-line total"><span>Preorder price today</span><span>â‚¦6,999.99</span></div>
         <a class="co-btn" href="https://selar.com/theautoloopsystem" target="_blank"
           style="display:block;text-align:center;text-decoration:none;color:#fff;">Get The Autoloop System</a>
         <span class="co-note">Delivered <b>privately</b> to your inbox on launch day.</span>
-        <div class="refund-note">Full refund any time before 15 Oct 2026 · Access unlocks on launch day · No spam, no
+        <div class="refund-note">Full refund any time before 15 Oct 2026 Â· Access unlocks on launch day Â· No spam, no
           public record of purchase</div>
       </div>
     </div>
@@ -1413,9 +1371,9 @@
   <section class="urgency-wrap" style="padding-top:44px;padding-bottom:44px;">
     <div class="wrap">
       <div class="urgency">
-        <span>⏳</span>
-        <span>This is a preorder. Everyone who joins now locks in ₦6,999.99 and gets access on launch day. From
-          <strong>15 October 2026</strong>, the price moves to ₦11,999.99 for new buyers — preorder buyers are never
+        <span>â³</span>
+        <span>This is a preorder. Everyone who joins now locks in â‚¦6,999.99 and gets access on launch day. From
+          <strong>15 October 2026</strong>, the price moves to â‚¦11,999.99 for new buyers â€” preorder buyers are never
           affected.</span>
       </div>
     </div>
@@ -1429,11 +1387,11 @@
         <details>
           <summary>What if I've tried to quit before and it didn't stick? <span class="plus">+</span></summary>
           <p>Most buyers have tried before, usually with willpower-only methods. This targets an earlier point in the
-            loop — a different mechanism, not more of the same thing done harder.</p>
+            loop â€” a different mechanism, not more of the same thing done harder.</p>
         </details>
         <details>
           <summary>What if I relapse after starting this? <span class="plus">+</span></summary>
-          <p>You probably will, at least once — expected, not a failure. The Reload Debrief exists to stop one slip from
+          <p>You probably will, at least once â€” expected, not a failure. The Reload Debrief exists to stop one slip from
             becoming a full reset.</p>
         </details>
         <details>
@@ -1443,17 +1401,17 @@
         </details>
         <details>
           <summary>What if my issue is more about porn than the physical habit? <span class="plus">+</span></summary>
-          <p>The mechanism applies the same way — the Pull Interrupt List and Decision Tree both address
+          <p>The mechanism applies the same way â€” the Pull Interrupt List and Decision Tree both address
             screen-triggered urges directly.</p>
         </details>
         <details>
           <summary>What if I don't want to quit entirely, just get control? <span class="plus">+</span></summary>
-          <p>That's exactly what this is for. The goal is that it stops being automatic — what you do with the choice
+          <p>That's exactly what this is for. The goal is that it stops being automatic â€” what you do with the choice
             afterward is yours.</p>
         </details>
         <details>
           <summary>What if I've been dealing with this for years? <span class="plus">+</span></summary>
-          <p>A longer pattern just means a more worn Script — the entry point for interrupting it doesn't change.</p>
+          <p>A longer pattern just means a more worn Script â€” the entry point for interrupting it doesn't change.</p>
         </details>
         <details>
           <summary>What if I'm too busy? <span class="plus">+</span></summary>
@@ -1461,7 +1419,7 @@
         </details>
         <details>
           <summary>Is this a medical or clinical treatment? <span class="plus">+</span></summary>
-          <p>No — a behavior-pattern system, not therapy or medical treatment. See the credibility note below.</p>
+          <p>No â€” a behavior-pattern system, not therapy or medical treatment. See the credibility note below.</p>
         </details>
         <details>
           <summary>Is this guaranteed to work? <span class="plus">+</span></summary>
@@ -1470,23 +1428,52 @@
         </details>
         <details>
           <summary>What if I think I need professional help instead? <span class="plus">+</span></summary>
-          <p>This can sit alongside professional support if this is affecting you significantly — it isn't a replacement
+          <p>This can sit alongside professional support if this is affecting you significantly â€” it isn't a replacement
             for it.</p>
         </details>
       </div>
     </div>
   </section>
 
-  <!-- CREDIBILITY -->
-  <section>
+  <!-- MECHANISM -->
+  <section class="dark">
     <div class="wrap">
-      <h2 style="font-size:25px;">Built on established behavior-change ideas, adapted to this problem</h2>
-      <p style="color:var(--ink-soft);font-size:16px;">The Autoloop draws on well-documented cue–craving–response–reward
-        models from habit-change psychology, adapted and renamed for this specific pattern. It is not a clinically
-        validated treatment protocol, and no such claim is made here.</p>
-      <p style="color:var(--ink-soft);font-size:16px;">This product does not diagnose or treat any medical or
-        psychological condition, and makes no claims about physical or hormonal harm — there isn't credible evidence for
-        those claims, and none are made here.</p>
+      <h2>You've been fighting at the hardest possible moment.</h2>
+      <p style="font-size:16.5px;">Every method that relies on "just don't do it" asks you to win at the exact point
+        where the urge is strongest and your reasoning brain has the least influence. That's not a discipline problem â€”
+        it's the wrong point of attack.</p>
+      <div class="loop-callout">The habit doesn't start with the act. It starts several steps earlier, somewhere you're
+        not watching.</div>
+      <p style="font-size:16.5px;">The six-stage pattern most people never see, because it happens fast and mostly
+        outside conscious awareness:</p>
+      <div class="loop-diagram">
+        <div class="loop-step"><span class="n">1</span>
+          <h4>Spark</h4>
+          <p>An internal state or cue â€” boredom, loneliness, stress, an empty stretch of time.</p>
+        </div>
+        <div class="loop-step"><span class="n">2</span>
+          <h4>Pull</h4>
+          <p>The Spark turns into a craving, fast enough to feel like a pull, not a thought.</p>
+        </div>
+        <div class="loop-step"><span class="n">3</span>
+          <h4>Script</h4>
+          <p>A pre-loaded sequence runs â€” unlock, open, search. The "I wasn't deciding" part.</p>
+        </div>
+        <div class="loop-step"><span class="n">4</span>
+          <h4>Discharge</h4>
+          <p>The act itself â€” the point every willpower method tries and mostly fails to stop.</p>
+        </div>
+        <div class="loop-step"><span class="n">5</span>
+          <h4>Numb</h4>
+          <p>A short window of flatness â€” not pleasure, more a dulling of the original state.</p>
+        </div>
+        <div class="loop-step"><span class="n">6</span>
+          <h4>Reload</h4>
+          <p>Guilt sets in â€” and quietly becomes the next Spark.</p>
+        </div>
+      </div>
+      <p style="font-size:16.5px;">That last step is the trap. The guilt doesn't end the cycle â€” it feeds it. That's why
+        the pattern tightens instead of fading.</p>
     </div>
   </section>
 
@@ -1500,7 +1487,7 @@
         <div>
           <h3 style="font-size:18px;margin-bottom:8px;">Clear, no-argument policy</h3>
           <p style="color:var(--ink-soft);font-size:15.5px;margin-bottom:8px;"><strong>Before 15 October 2026
-              (launch):</strong> full refund, any time, no reason needed — this is a preorder, and you're free to change
+              (launch):</strong> full refund, any time, no reason needed â€” this is a preorder, and you're free to change
             your mind before delivery.</p>
           <p style="color:var(--ink-soft);font-size:15.5px;margin-bottom:0;"><strong>After launch:</strong> use the
             Spark Log daily for 7 days; if you see no clearer pattern in your own urges, send us your log for a full
@@ -1529,19 +1516,19 @@
         </details>
         <details>
           <summary>Do I need any special app or subscription? <span class="plus">+</span></summary>
-          <p>No. Works with a phone, notes app, or printed sheet — no account or recurring payment.</p>
+          <p>No. Works with a phone, notes app, or printed sheet â€” no account or recurring payment.</p>
         </details>
         <details>
           <summary>How long does it take to go through? <span class="plus">+</span></summary>
-          <p>Core material: 45–60 minutes. Daily tools: under 2 minutes a day after that.</p>
+          <p>Core material: 45â€“60 minutes. Daily tools: under 2 minutes a day after that.</p>
         </details>
         <details>
           <summary>Does this cover screen-based triggers too? <span class="plus">+</span></summary>
-          <p>Yes — Spark and Pull are usually screen-triggered, and the tools are built with that in mind.</p>
+          <p>Yes â€” Spark and Pull are usually screen-triggered, and the tools are built with that in mind.</p>
         </details>
         <details>
           <summary>Will this make me feel ashamed? <span class="plus">+</span></summary>
-          <p>No — the approach is built around removing shame, since shame is part of what keeps the loop running.</p>
+          <p>No â€” the approach is built around removing shame, since shame is part of what keeps the loop running.</p>
         </details>
         <details>
           <summary>Do I have to aim for total abstinence? <span class="plus">+</span></summary>
@@ -1549,27 +1536,27 @@
         </details>
         <details>
           <summary>What if I slip in the first few days? <span class="plus">+</span></summary>
-          <p>Expected — the Reload Debrief exists specifically for this.</p>
+          <p>Expected â€” the Reload Debrief exists specifically for this.</p>
         </details>
         <details>
           <summary>Is there ongoing support or a community? <span class="plus">+</span></summary>
-          <p>This is self-guided, not a coaching program — intentional, to stay private and affordable.</p>
+          <p>This is self-guided, not a coaching program â€” intentional, to stay private and affordable.</p>
         </details>
         <details>
           <summary>Can my partner find out I bought this? <span class="plus">+</span></summary>
-          <p>Not through us — purchase and delivery are discreet by design.</p>
+          <p>Not through us â€” purchase and delivery are discreet by design.</p>
         </details>
         <details>
           <summary>What age group is this for? <span class="plus">+</span></summary>
-          <p>Adult men — language and examples are written for adult daily life, work, and relationships.</p>
+          <p>Adult men â€” language and examples are written for adult daily life, work, and relationships.</p>
         </details>
         <details>
           <summary>Will the price change later? <span class="plus">+</span></summary>
-          <p>Yes — see the preorder note above. Preorder buyers are locked at ₦6,999.99 regardless.</p>
+          <p>Yes â€” see the preorder note above. Preorder buyers are locked at â‚¦6,999.99 regardless.</p>
         </details>
         <details>
           <summary>What's the refund policy exactly? <span class="plus">+</span></summary>
-          <p>Full refund any time before 15 October 2026. After that, the 7-day action guarantee applies — see above.
+          <p>Full refund any time before 15 October 2026. After that, the 7-day action guarantee applies â€” see above.
           </p>
         </details>
         <details>
@@ -1588,7 +1575,7 @@
 
   <!-- LAST THING -->
       <h2>The version of you that isn't surprised by his own behavior anymore</h2>
-      <p style="max-width:32em;margin:0 auto 28px;">Not a version with zero urges — a version who sees the Spark coming,
+      <p style="max-width:32em;margin:0 auto 28px;">Not a version with zero urges â€” a version who sees the Spark coming,
         knows what to do with it, and isn't run by a loop he never agreed to.</p>
       <a href="https://selar.com/theautoloopsystem" target="_blank" class="btn btn-primary">Get The Autoloop System</a>
     </div>
@@ -1600,17 +1587,17 @@
       <h2>Everything you get</h2>
       <div class="glass-grid">
         <div class="glass-card"><span class="name">The Autoloop System (core program)</span><span
-            class="value">₦7,000</span></div>
-        <div class="glass-card"><span class="name">The Spark Log</span><span class="value">₦2,500</span></div>
-        <div class="glass-card"><span class="name">The Pull Interrupt List</span><span class="value">₦3,000</span></div>
-        <div class="glass-card"><span class="name">The High-Risk Hours Map</span><span class="value">₦2,000</span></div>
-        <div class="glass-card"><span class="name">The Decision Tree</span><span class="value">₦2,000</span></div>
+            class="value">â‚¦7,000</span></div>
+        <div class="glass-card"><span class="name">The Spark Log</span><span class="value">â‚¦2,500</span></div>
+        <div class="glass-card"><span class="name">The Pull Interrupt List</span><span class="value">â‚¦3,000</span></div>
+        <div class="glass-card"><span class="name">The High-Risk Hours Map</span><span class="value">â‚¦2,000</span></div>
+        <div class="glass-card"><span class="name">The Decision Tree</span><span class="value">â‚¦2,000</span></div>
         <div class="glass-card"><span class="name">Reload Debrief + 30-Day Tracker</span><span
-            class="value">₦4,500</span></div>
+            class="value">â‚¦4,500</span></div>
       </div>
       <div class="glass-total">
-        <div><span class="was">₦21,000 value</span><span class="now">₦6,999.99</span></div>
-        <div class="launch">Preorder price. Rises to ₦11,999.99 at public launch.</div>
+        <div><span class="was">â‚¦21,000 value</span><span class="now">â‚¦6,999.99</span></div>
+        <div class="launch">Preorder price. Rises to â‚¦11,999.99 at public launch.</div>
         <a href="https://selar.com/theautoloopsystem" target="_blank" class="btn btn-amber"
           style="margin-top:18px;">Get The Autoloop System</a>
       </div>
@@ -1628,7 +1615,7 @@
   </footer>
 
   <div class="sticky-bar" id="stickyBar">
-    <span class="price">Preorder · ₦6,999.99</span>
+    <span class="price">Preorder Â· â‚¦6,999.99</span>
     <a href="https://selar.com/theautoloopsystem" target="_blank"
       style="text-decoration:none;color:#fff;background:var(--control);padding:12px 18px;border-radius:5px;font-weight:700;font-size:14px;">Get The Autoloop System</a>
   </div>
@@ -1693,7 +1680,7 @@
 
   <!-- SOCIAL PROOF POPUP -->
   <div class="sales-popup" id="salesPopup">
-    <div style="font-size: 24px;">🔒</div>
+    <div style="font-size: 24px;">ðŸ”’</div>
     <div class="sales-text">
       <strong id="sp-name">Someone in Lagos</strong>
       just preordered The Autoloop System
@@ -1782,5 +1769,6 @@
 </body>
 
 </html>
+
 
 
