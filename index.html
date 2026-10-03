@@ -141,6 +141,8 @@
   <style>
 
     :root {
+      --btn-accent: #d97706; /* Vibrant Amber/Orange for high conversion */
+      --btn-accent-hover: #b45309;
       --ink: #15181d;
       --ink-soft: #4a5058;
       --line: #e6e3db;
@@ -287,12 +289,12 @@
     }
 
     .btn-primary {
-      background: var(--control);
+      background: var(--btn-accent);
       color: #fff;
     }
 
     .btn-primary:hover {
-      background: #152d40;
+      background: var(--btn-accent-hover);
     }
 
     .btn-amber {
@@ -910,7 +912,7 @@
       width: 100%;
       margin-top: 22px;
       padding: 19px;
-      background: var(--control);
+      background: var(--btn-accent);
       color: #fff;
       border: none;
       border-radius: 5px;
@@ -921,7 +923,7 @@
     }
 
     .co-btn:hover {
-      background: #152d40;
+      background: var(--btn-accent-hover);
     }
 
     .co-note {
@@ -1617,7 +1619,7 @@
   <div class="sticky-bar" id="stickyBar">
     <span class="price">Preorder · ₦6,999.99</span>
     <a href="https://selar.com/theautoloopsystem" target="_blank"
-      style="text-decoration:none;color:#fff;background:var(--control);padding:12px 18px;border-radius:5px;font-weight:700;font-size:14px;">Get The Autoloop System</a>
+      style="text-decoration:none;color:#fff;background:var(--btn-accent);padding:12px 18px;border-radius:5px;font-weight:700;font-size:14px;">Get The Autoloop System</a>
   </div>
 
   <script>
