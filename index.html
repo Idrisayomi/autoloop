@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -1740,33 +1740,47 @@
     const spName = document.getElementById('sp-name');
     const spTime = document.getElementById('sp-time');
     
-    const locations = ["Lagos", "Abuja", "Port Harcourt", "Ibadan", "Accra", "London", "Dallas", "Kano"];
-    const times = ["just now", "2 minutes ago", "5 minutes ago", "12 minutes ago", "18 minutes ago", "just now"];
+    // Large pool of names and realistic times
+    const names = ["David", "Emeka", "Michael", "Tunde", "Emmanuel", "Chidi", "Ibrahim", "Femi", "Daniel", "Kunle", "Victor", "Chuks", "Samuel", "Tope", "John", "Gbenga"];
+    const times = ["just now", "just now", "2 minutes ago", "5 minutes ago", "12 minutes ago", "28 minutes ago", "45 minutes ago", "1 hour ago", "2 hours ago", "4 hours ago"];
     
+    let lastName = "";
+
     function showPopup() {
-      // Pick random location and time
-      const loc = locations[Math.floor(Math.random() * locations.length)];
+      // Pick random name, ensuring we don't show the same name twice in a row
+      let name = names[Math.floor(Math.random() * names.length)];
+      while(name === lastName) {
+        name = names[Math.floor(Math.random() * names.length)];
+      }
+      lastName = name;
+
       const time = times[Math.floor(Math.random() * times.length)];
       
-      spName.innerText = "Someone in " + loc;
+      spName.innerText = name;
       spTime.innerText = time;
       
       popup.classList.add('show');
       
-      // Hide after 5 seconds
+      // Hide after 6 seconds
       setTimeout(() => {
         popup.classList.remove('show');
-      }, 5000);
+      }, 6000);
     }
 
-    // Initial delay before first popup
+    // Show first popup after 4 seconds
     setTimeout(() => {
       showPopup();
-      // Then show randomly every 15 to 35 seconds
-      setInterval(() => {
-        showPopup();
-      }, Math.floor(Math.random() * 20000) + 15000);
-    }, 6000);
+      
+      // Variable interval for subsequent popups (every 15 to 35 seconds)
+      function queueNextPopup() {
+        const nextDelay = Math.floor(Math.random() * 20000) + 15000; 
+        setTimeout(() => {
+          showPopup();
+          queueNextPopup();
+        }, nextDelay);
+      }
+      queueNextPopup();
+    }, 4000);
   </script>
 </body>
 
